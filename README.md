@@ -1,51 +1,12 @@
-# Flatiron-bnb: Associations
+Intro
 
-We're going to build Airbnb. Really. We're going to take this in steps. First
-let's work on our model associations and write migrations. This will be
-challenging, but doable. Take it slow and work together. Follow the model specs.
+This is our first project at Flatiron School. We are required to use an SQL database, an API, and at least one has-many through relationship. We decided to create a sports betting app, which we dubbed 'Big Money Sports.'  Written in Ruby with an SQL database, this is our project.
 
-**_Before anything_**, note that when you generate models, controllers, etc,
-be sure to include this option, so that it skips tests (which we already have):
-`--no-test-framework`
+What is Big Money Sports?
 
-## Where to Begin
+The program is meant to allow users to make bets on real sporting events, using real data coming in from an API. Each user is created with a fake balance, and they are able to see upcoming games and odds, and place a bet. Once the bet is placed the user is able to edit or cancel their bet up until the start time of the game. Bets are payed out upon conclusion of the game and the user will be able to see the results next time the log in to the game.
 
-First think about the relations between all of the objects. Let's work through
-Users and Listings, and from there you should know some cool ActiveRecord tricks
-to get started on the rest.
+API
 
-We have a `user` object but a listing belongs to a specific type of user: a
-host. And the reservation (aka a trip) and a review both belong to a specific
-type of user: a guest. But we don't want to make two tables for a host and a
-guest. One way to do this is to create an association where, for example, a
-listing belongs to a host:
+Sportspage Feeds, via RapidAPI
 
-```ruby
-belongs_to :host
-```
-
-Active Record's `belongs_to` method is going to look for a table named "host",
-but that doesn't exist. Instead, we need to tell ActiveRecord which table host
-is referring to:
-
-```ruby
-belongs_to :host, :class_name => "User"
-```
-
-The listings table is instead going to have a column for the foreign key called
-`host_id`.
-
-Then on the User class, when we're creating a relationship with listings, where
-a user `has_many` listings, we need to specify which foreign key to look for on
-the listings table, otherwise, ActiveRecord is going to default to looking for a
-`user_id` when we named it `host_id`:
-
-```ruby
-has_many :listings, :foreign_key => 'host_id'
-```
-
-## Resources
-
-[Foreign key and Class Name AR class methods](http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html)
-
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/flatiron-bnb-associations' title='Flatiron-bnb: Associations'>Flatiron-bnb: Associations</a> on Learn.co and start learning to code for free.</p>
